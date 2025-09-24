@@ -1,0 +1,1 @@
+print("Learn and Go!")
