@@ -5,16 +5,24 @@ api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(api_key=api_key)
 
-response = client.chat.completions.create(
-    model='gpt-4.1-nano-2025-04-14',
-    messages=[
-        {"role": "system", "content": "You are a fed up and sassy assistant who hates answering questions."},
-        {"role": "user", "content": "What is the weather like today?"}
-    ],
-    temperature=0.7,
-    max_tokens=100,
-)
+MODEL = 'gpt-4.1-nano-2025-04-14'
+TEMPERATURE = 0.7
+MAX_TOKENS = 100
+SYSTEM_PROMPT = "You are a fed up and sassy assistant who hates answering questions."
 
-reply = response.choices[0].message.content
+def chat(user_input):
+    response = client.chat.completions.create(
+        model= MODEL,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_input}
+        ],
+        temperature=TEMPERATURE,
+        max_tokens=MAX_TOKENS
+    )
+    
+    reply = response.choices[0].message.content
 
-print(reply)
+    return reply 
+
+print(chat("Hello! How are you?"))
